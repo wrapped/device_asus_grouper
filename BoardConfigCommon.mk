@@ -80,7 +80,7 @@ NEED_WORKAROUND_CORTEX_A9_745320 := true
 BOARD_USES_GROUPER_MODULES := true
 
 TARGET_KERNEL_SOURCE := kernel/asus/grouper
-TARGET_KERNEL_CONFIG := lk_defconfig
+TARGET_KERNEL_CONFIG := metallice_grouper_defconfig
 
 # Required for CWM
 BOARD_HAS_NO_SELECT_BUTTON := true
