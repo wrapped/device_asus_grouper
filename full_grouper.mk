@@ -27,16 +27,14 @@ $(call inherit-product, device/asus/grouper/device.mk)
 #$(call inherit-product, device/sample/products/backup_overlay.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
-$(call inherit-product, vendor/eos/config/common_full_tablet_wifionly.mk)
-# Copy Bootanimation
-# PRODUCT_COPY_FILES += \
-# vendor/eos/prebuilt/common/bootanimation/720.zip:system/media/bootanimation.zip
-
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := full_grouper
 PRODUCT_DEVICE := grouper
 PRODUCT_BRAND := Google
 PRODUCT_MODEL := Nexus 7
 PRODUCT_MANUFACTURER := ASUS
+
+#Set build fingerprint / ID / Product Name ect.
+PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=nakasi BUILD_FINGERPRINT="google/nakasi/grouper:5.0/LRX21P/1570855:user/release-keys" PRIVATE_BUILD_DESC="nakasi-user 5.0 LRX21P 1570855 release-keys"
 
 PRODUCT_RESTRICT_VENDOR_FILES := false
