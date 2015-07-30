@@ -1,6 +1,43 @@
 [
   {
-    "repository": "kernel_asus_grouper",
-    "target_path": "kernel/asus/grouper"
+    "remote": "github",
+    "repository": "CyanogenMod/android_kernel_asus_grouper",
+    "target_path": "kernel/asus/grouper",
+    "revision": "cm-12.1"
+  },
+  {
+    "repository": "vendor_asus",
+    "target_path": "vendor/asus"
+    "revision": "lp5.1"
+  },
+  {
+    "repository": "vendor_broadcom",
+    "target_path": "vendor/broadcom"
+    "revision": "lp5.1"
+  },
+  {
+    "repository": "vendor_elan",
+    "target_path": "vendor/elan"
+    "revision": "lp5.1"
+  },
+  {
+    "repository": "vendor_invensense",
+    "target_path": "vendor/invensense"
+    "revision": "lp5.1"
+  },
+  {
+    "repository": "vendor_nvidia",
+    "target_path": "vendor/nvidia"
+    "revision": "lp5.1"
+  },
+   {
+    "repository": "vendor_nxp",
+    "target_path": "vendor/nxp"
+    "revision": "lp5.0"
+  },
+  {
+    "repository": "vendor_widevine",
+    "target_path": "vendor/widevine"
+    "revision": "lp5.1"
   }
 ]
