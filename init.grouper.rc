@@ -18,6 +18,12 @@ on init
     symlink /storage/emulated/legacy /storage/sdcard0
     symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 
+    # USB OTG support
+    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
+    mkdir /storage/usbdisk 0700 root root
+    symlink /storage/usbdisk /mnt/usbdisk
+    symlink /mnt/usbdisk /usbdisk
+
 on early-boot
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
@@ -26,6 +32,7 @@ on early-boot
 
 on fs
     setprop ro.crypto.umount_sd false
+    setprop ro.crypto.fuse_sdcard true
     mount_all /fstab.grouper
 
 on post-fs-data
@@ -45,6 +52,11 @@ on post-fs-data
     chown root root /data/lightsensor
     mkdir /data/calibration
     mkdir /data/amit
+
+    # gps
+    mkdir /data/gps
+    chown gps system /data/gps
+    chmod 770 /data/gps
 
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
@@ -250,6 +262,10 @@ on boot
 # Interactive governor settings
     chown system system /sys/devices/system/cpu/cpufreq/interactive/boost_factor
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boost_factor
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/core_lock_count
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/core_lock_count
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/core_lock_period
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/core_lock_period
     chown system system /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
     chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
@@ -285,9 +301,6 @@ on boot
     write /sys/class/gpio/gpio162/direction out
     chown gps system /sys/class/gpio/gpio162/value
     chmod 0664 /sys/class/gpio/gpio162/value
-    mkdir /data/gps
-    chown gps system /data/gps
-    chmod 770 /data/gps
     chown gps system /dev/ttyHS1
     chmod 0660 /dev/ttyHS1
 
@@ -379,8 +392,14 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
 #Sensor load calibration files end
 
 # virtual sdcard daemon running as media_rw (1023)
-service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
+service sdcard /system/bin/sdcard -u 1023 -g 1023 -t 4 -l /data/media /mnt/shell/emulated
     class late_start
+
+# daemon for the USB OTG storage, running as media_rw (1023) and
+# giving write permission to sdcard_rw (1015)
+service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/usbdisk /storage/usbdisk
+    class late_start
+    disabled
 
 # bugreport is triggered by the VOLUME-DOWN and VOLUME-UP keys
 service bugreport /system/bin/dumpstate -d -p -B \
@@ -391,8 +410,7 @@ service bugreport /system/bin/dumpstate -d -p -B \
     keycodes 115 114
 
 # Start GPS daemon
-  on boot
-  service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
+service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
   user gps
   group system
   class late_start

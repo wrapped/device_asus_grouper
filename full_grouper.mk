@@ -19,9 +19,7 @@
 # product configuration (apps).
 #
 
-# Release name
-PRODUCT_RELEASE_NAME := Nexus7
-
+# Inherit from those products. Most specific first.
 $(call inherit-product, device/asus/grouper/device.mk)
 # This is where we'd set a backup provider if we had one
 #$(call inherit-product, device/sample/products/backup_overlay.mk)
@@ -30,11 +28,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := full_grouper
 PRODUCT_DEVICE := grouper
-PRODUCT_BRAND := Google
-PRODUCT_MODEL := Nexus 7
-PRODUCT_MANUFACTURER := ASUS
-
-#Set build fingerprint / ID / Product Name ect.
-PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=nakasi BUILD_FINGERPRINT="google/nakasi/grouper:5.0/LRX21P/1570855:user/release-keys" PRIVATE_BUILD_DESC="nakasi-user 5.0 LRX21P 1570855 release-keys"
-
+PRODUCT_BRAND := Android
+# Don't restrict vendor folder
 PRODUCT_RESTRICT_VENDOR_FILES := false
+PRODUCT_MODEL := CyanogenMod on Grouper
