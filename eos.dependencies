@@ -11,14 +11,16 @@
     "revision": "lp5.1"
   },
   {
-    "repository": "vendor_broadcom",
+    "remote": "github",
+    "repository": "TheMuppets/proprietary/vendor_broadcom",
     "target_path": "vendor/broadcom",
-    "revision": "lp5.1"
+    "revision": "cm-12.1"
   },
   {
-    "repository": "vendor_elan",
+    "remote": "github",
+    "repository": "TheMuppets/proprietary/vendor_elan",
     "target_path": "vendor/elan",
-    "revision": "lp5.1"
+    "revision": "cm-12.1"
   },
   {
     "repository": "vendor_invensense",
@@ -31,9 +33,10 @@
     "revision": "lp5.1"
   },
    {
-    "repository": "vendor_nxp",
+    "remote": "github",
+    "repository": "TheMuppets/proprietary/vendor_nxp",
     "target_path": "vendor/nxp",
-    "revision": "lp5.0"
+    "revision": "cm-12.1"
   },
   {
     "repository": "vendor_widevine",
